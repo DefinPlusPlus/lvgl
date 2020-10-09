@@ -553,9 +553,9 @@ LV_ATTRIBUTE_FAST_MEM static inline void lv_color_mix_with_alpha(lv_color_t bg_c
         /*Save the parameters and the result. If they will be asked again don't compute again*/
         static lv_opa_t fg_opa_save     = 0;
         static lv_opa_t bg_opa_save     = 0;
-        static lv_color_t fg_color_save = {.full = 0};
-        static lv_color_t bg_color_save = {.full = 0};
-        static lv_color_t res_color_saved = {.full = 0};
+        static lv_color_t fg_color_save = { 0 };
+        static lv_color_t bg_color_save = { 0 };
+        static lv_color_t res_color_saved = { 0 };
         static lv_opa_t res_opa_saved = 0;
 
         if(fg_opa != fg_opa_save || bg_opa != bg_opa_save || fg_color.full != fg_color_save.full ||
@@ -626,7 +626,7 @@ static inline uint8_t lv_color_brightness(lv_color_t color)
 
 /* The most simple macro to create a color from R,G and B values */
 #if LV_COLOR_DEPTH == 1
-#define LV_COLOR_MAKE(r8, g8, b8) (_LV_COLOR_MAKE_TYPE_HELPER {{(b8 >> 7) | (g8 >> 7) | (r8 >> 7)}})
+#define LV_COLOR_MAKE(r8, g8, b8) (_LV_COLOR_MAKE_TYPE_HELPER {{(uint8_t)((b8 >> 7) | (g8 >> 7) | (r8 >> 7))}})
 #elif LV_COLOR_DEPTH == 8
 #define LV_COLOR_MAKE(r8, g8, b8) (_LV_COLOR_MAKE_TYPE_HELPER{{(uint8_t)((b8 >> 6) & 0x3U), (uint8_t)((g8 >> 5) & 0x7U), (uint8_t)((r8 >> 5) & 0x7U)}})
 #elif LV_COLOR_DEPTH == 16
